@@ -21,6 +21,8 @@ import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
 import PageNotFound from "./pages/PageNotFound"
 import { UserContext } from "./Context/UserContext";
+import Footer from "./layout/Footer";
+import Header from "./layout/Header";
 
 
 const App = () => {
@@ -31,6 +33,7 @@ const App = () => {
    <BrowserRouter>
      <ToastContainer/>
      <UserContext.Provider value={{user, setUser}}>
+       <Header/>
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/signin" element={<Signin/>} />
@@ -38,6 +41,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound/>} /> 
           {/* here star is used for all the other routes that are not mentioned */}
         </Routes>
+        <Footer/>
      </UserContext.Provider>
    </BrowserRouter>
   );
