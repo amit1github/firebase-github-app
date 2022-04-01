@@ -1,39 +1,108 @@
-import React from 'react'
-import { AppBar, Box, Toolbar, IconButton, Typography, Button } from '@mui/material'
-import { Menu } from '@mui/icons-material'
+import React from "react";
+import {
+  AppBar,
+  Container,
+  Menu,
+  MenuList,
+  MenuItem,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+} from "@mui/material";
+import { MenuRounded } from "@mui/icons-material";
 
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import { UserContext } from '../Context/UserContext'
+import { UserContext } from "../Context/UserContext";
 
 
+const pages = ['Products', 'Pricing', 'Blog'];
 
 const Header = () => {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <Menu />
-          </IconButton>
-          {/* <Box> */}
-          {/* <Link to="/"> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Git-Fire App
-          </Typography>
-          {/* </Link> */}
-          {/* </Box> */}
-          <Button color="inherit" >Login</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  )
-}
 
-export default Header
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+            LOGO
+          </Typography>
+
+          <Box sx={{  display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuRounded />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+export default Header;

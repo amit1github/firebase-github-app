@@ -4,11 +4,12 @@ import { Copyright } from "@mui/icons-material";
 
 const Footer = () => {
   return (
+   <footer>
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        // todo
+        // todo: understand
         minHeight: "80vh",
       }}
     >
@@ -30,6 +31,7 @@ const Footer = () => {
         </Container>
       </Box>
     </Box>
+    </footer>
   );
 };
 
