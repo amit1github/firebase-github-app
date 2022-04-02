@@ -24,6 +24,9 @@ import { UserContext } from "./Context/UserContext";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
+import firebaseConfig from "./Config/firebaseConfig";
+// init firebase
+firebase.initializeApp(firebaseConfig)
 
 const App = () => {
 
