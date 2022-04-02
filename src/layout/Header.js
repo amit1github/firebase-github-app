@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Container,
   Menu,
-  MenuList,
   MenuItem,
   Box,
   Toolbar,
@@ -14,95 +13,54 @@ import {
 import { MenuRounded } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
-
 import { UserContext } from "../Context/UserContext";
 
-
-const pages = ['Products', 'Pricing', 'Blog'];
-
 const Header = () => {
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const context = useContext(UserContext);
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
           >
-            LOGO
-          </Typography>
-
-          <Box sx={{  display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuRounded />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            <MenuRounded />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              <Typography variant="h6" component="div">
+                Github-firebase-app
+              </Typography>
+            </Link>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            LOGO
+          {/* todo context */}
+          <Typography >
+            {" "}
+            {context.user?.email ? context.user.email : ""}{" "}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          {context.user ? (
+            <Link to="/logout" style={{ textDecoration: "none", color: "white" }}>
+              <Button color="inherit">Logout</Button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/signup" style={{ textDecoration: "none", color: "white" }}>
+                <Button color="inherit">Signup</Button>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none", color: "white" }}>
+                <Button color="inherit">Login</Button>
+              </Link>
+            </>
+          )}
         </Toolbar>
-      </Container>
-    </AppBar>
+      </AppBar>
+    </Box>
   );
 };
+
 export default Header;
