@@ -1,19 +1,12 @@
 import React, {useState} from "react";
-import logo from './logo.svg';
 import './App.css';
 
-import { Box } from "@mui/material";
-
 // react router
-import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 //Toastify
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// firebase
-import firebase from "firebase/app"
-import "firebase/auth"
 
 //components
 import Home from "./pages/Home"
@@ -24,16 +17,20 @@ import { UserContext } from "./Context/UserContext";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
-import firebaseConfig from "./Config/firebaseConfig";
-// init firebase
-firebase.initializeApp(firebaseConfig)
+//Todo: firebase
+import firebaseConfig from "./Config/firebaseConfig"
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth"
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// const auth = getAuth(firebaseConfig)
 
 const App = () => {
 
   const [user, setUser] = useState(null)
 
   return (
-   <BrowserRouter>
+   <Router>
      <ToastContainer/>
      <UserContext.Provider value={{user, setUser}}>
        <Header/>
@@ -46,7 +43,7 @@ const App = () => {
         </Routes>
         <Footer/>
      </UserContext.Provider>
-   </BrowserRouter>
+   </Router>
   );
 }
 

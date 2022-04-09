@@ -1,9 +1,118 @@
-import React from 'react'
+import React, { useState, useContext } from "react";
+import {
+  Box,
+  Typography,
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Container,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LockOutlined } from "@mui/icons-material";
 
-const Signin = () => {
+import firebase from "firebase/app"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import { UserContext } from "../Context/UserContext";
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+const Signup = () => {
+  const context = useContext(UserContext);
+
+  const theme = createTheme();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const auth = getAuth();
+
+  const handleSignUp = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res);
+        context.setUser({ email: res.user.email, uid: res.user.uid }); //uid = userid
+      })
+      .catch((error) => {
+        console.log(error);
+        toast(error.message, {
+          type: "error",
+        });
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignUp();
+  };
+
+  if (context.user?.uid) {
+    return <Navigate to="/" replace/>;
+  }
   return (
-    <div>Signin</div>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlined />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign In / Login form
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Email Address"
+              type="email"
+              name="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Password"
+              type="password"
+              name="password"
+              id="password"
+              boolean="true"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+};
 
-export default Signin
+export default Signup;

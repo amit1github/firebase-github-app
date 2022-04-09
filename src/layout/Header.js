@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import {
   AppBar,
-  Container,
-  Menu,
-  MenuItem,
   Box,
   Toolbar,
   IconButton,
@@ -39,21 +36,31 @@ const Header = () => {
             </Link>
           </Box>
           {/* todo context */}
-          <Typography >
-            {" "}
-            {context.user?.email ? context.user.email : ""}{" "}
+          <Typography>
+            {context.user?.email ? context.user.email : ""}
           </Typography>
           {context.user ? (
-            <Link to="/logout" style={{ textDecoration: "none", color: "white" }}>
+            <Link
+              onClick={() => {
+                context.setUser(null);
+              }}
+              style={{ textDecoration: "none", color: "white" }}
+            >
               <Button color="inherit">Logout</Button>
             </Link>
           ) : (
             <>
-              <Link to="/signup" style={{ textDecoration: "none", color: "white" }}>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "white" }}
+              >
                 <Button color="inherit">Signup</Button>
               </Link>
-              <Link to="/login" style={{ textDecoration: "none", color: "white" }}>
-                <Button color="inherit">Login</Button>
+              <Link
+                to="/signin"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Button color="inherit">Signin</Button>
               </Link>
             </>
           )}
