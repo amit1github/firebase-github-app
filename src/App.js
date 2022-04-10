@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 
 // react router
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {BrowserRouter, Routes, Route} from "react-router-dom"
 
 //Toastify
 import { ToastContainer } from 'react-toastify';
@@ -17,20 +17,12 @@ import { UserContext } from "./Context/UserContext";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
-//Todo: firebase
-import firebaseConfig from "./Config/firebaseConfig"
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// const auth = getAuth(firebaseConfig)
-
 const App = () => {
 
   const [user, setUser] = useState(null)
 
   return (
-   <Router>
+   <BrowserRouter>
      <ToastContainer/>
      <UserContext.Provider value={{user, setUser}}>
        <Header/>
@@ -43,7 +35,7 @@ const App = () => {
         </Routes>
         <Footer/>
      </UserContext.Provider>
-   </Router>
+   </BrowserRouter>
   );
 }
 

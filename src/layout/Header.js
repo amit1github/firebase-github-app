@@ -6,14 +6,21 @@ import {
   IconButton,
   Typography,
   Button,
+  CardActions
 } from "@mui/material";
 import { MenuRounded } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../Config/firebaseConfig";
 
 const Header = () => {
   const context = useContext(UserContext);
+
+  const logout = async() => {
+    await signOut(auth)
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,21 +42,23 @@ const Header = () => {
               </Typography>
             </Link>
           </Box>
-          {/* todo context */}
           <Typography>
             {context.user?.email ? context.user.email : ""}
           </Typography>
           {context.user ? (
-            <Link
+            <CardActions 
               onClick={() => {
                 context.setUser(null);
               }}
               style={{ textDecoration: "none", color: "white" }}
             >
               <Button color="inherit">Logout</Button>
-            </Link>
+            </CardActions>
+            // <CardActions>
+            //   <Button onClick={logout} color="inherit">Logout</Button>
+            // </CardActions>
           ) : (
-            <>
+            <CardActions>
               <Link
                 to="/signup"
                 style={{ textDecoration: "none", color: "white" }}
@@ -62,7 +71,7 @@ const Header = () => {
               >
                 <Button color="inherit">Signin</Button>
               </Link>
-            </>
+            </CardActions>
           )}
         </Toolbar>
       </AppBar>

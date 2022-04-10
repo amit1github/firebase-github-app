@@ -10,23 +10,22 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LockOutlined } from "@mui/icons-material";
-
-import firebase from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-import { UserContext } from "../Context/UserContext";
-import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../Config/firebaseConfig";
+import { UserContext } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const context = useContext(UserContext);
 
   const theme = createTheme();
+  let navigate = useNavigate()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const auth = getAuth();
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -48,7 +47,7 @@ const Signup = () => {
   };
 
   if (context.user?.uid) {
-    return <Navigate to="/"  replace />;
+    return navigate('/')
   }
   return (
     <ThemeProvider theme={theme}>
