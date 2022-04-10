@@ -18,9 +18,9 @@ import { auth } from "../Config/firebaseConfig";
 const Header = () => {
   const context = useContext(UserContext);
 
-  const logout = async() => {
-    await signOut(auth)
-  }
+  // const logout = async() => {
+  //   await signOut(auth)
+  // }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
