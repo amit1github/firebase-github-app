@@ -3,7 +3,7 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { toast } from "react-toastify";
-import { Container, TextField, Button } from "@mui/material";
+import { TextField, Button, Grid, Box } from "@mui/material";
 
 import UserCard from "../Components/UserCard";
 import Repos from "../Components/Repos";
@@ -13,7 +13,7 @@ const Home = () => {
   const [query, setQuery] = useState("");
   const [user, setUser] = useState(null);
 
-  let navigate=useNavigate()
+  let navigate = useNavigate();
 
   const fetchDetails = async () => {
     try {
@@ -25,32 +25,31 @@ const Home = () => {
     }
   };
 
-  //Todo: Fixing errors by looking into console
-  //Put anypage behind login
-
   if (!context.user?.uid) {
-    return navigate('/signin')
+    return navigate("/signin");
   }
 
-  //Todo: styling part
-
   return (
-    <Container sx={{mt: 5, maxWidth: "100%"}}>
-      <TextField
-        focused
-        color="secondary"
-        label="Please provide the username"
-        variant="standard"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        sx={{ maxWidth: "900" }}
-      />
-      <Button onClick={fetchDetails} variant="contained" sx={{ml: 2}}>Fetch User</Button>
-    {user ? <UserCard user={user} />: null}
-    <Container>
-      {user ? <Repos repos_url={user.repos_url} /> : null}
-    </Container>
-    </Container>
+    <>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={6}>
+          <TextField
+            focused
+            color="secondary"
+            label="Please provide the username"
+            variant="standard"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            sx={{ maxWidth: "900" }}
+          />
+          <Button onClick={fetchDetails} variant="contained" sx={{ ml: 2 }}>
+            Fetch User
+          </Button>
+          <Box>{user ? <UserCard user={user} /> : null}</Box>
+          <Box>{user ? <Repos repos_url={user.repos_url} /> : null}</Box>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
