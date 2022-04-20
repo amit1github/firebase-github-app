@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-
 import {
-  List,
-  ListItem,
-  ListItemText,
   Typography,
-  Divider,
+  Grid,
+  Container,
+  Paper,
 } from "@mui/material";
+
+
 
 const Repos = ({ repos_url }) => {
   const [repos, setRepos] = useState([]);
@@ -22,31 +22,35 @@ const Repos = ({ repos_url }) => {
   }, [repos_url]);
 
   return (
-    <List sx={{ width: "100%" }}>
-      {repos.map((repo) => (
-        <ListItem  key={repo.id}>
-          <ListItemText
-            primary={repo.name}
-            gutterBottom
-            variant="h5"
-            color="text.primary"
-            secondary={
-              <>
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {repo.language}
-                </Typography>
-                {repo.description}
-              </>
-            }
-          />
-        </ListItem>
-      ))}
-    </List>
+    <Container sx={{ flexGrow: 1, mt: 4 }}>
+      <Grid container spacing={4}>
+        {repos.map((repo) => (
+          <Grid
+            item
+            key={repo.id}
+            xs={6}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignText: "center",
+            }}
+          >
+            <Paper>
+              <Typography variant="body1" color="primary">
+                Repo name: {repo.name}
+              </Typography>
+              <Typography variant="body2" color="secondary">
+                Technology: {repo.language}
+              </Typography>
+              <Typography variant="body2" color="error">
+                Description: {repo.description}
+              </Typography>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

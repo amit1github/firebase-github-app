@@ -31,24 +31,31 @@ const Home = () => {
 
   return (
     <>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6}>
+      <Grid container sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <Grid item xs={3}>
           <TextField
             focused
             color="secondary"
             label="Please provide the username"
             variant="standard"
+            fullWidth
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            sx={{ maxWidth: "900" }}
           />
-          <Button onClick={fetchDetails} variant="contained" sx={{ ml: 2 }}>
+        </Grid>
+        <Grid item xs={3} sx={{ padding: 1 }}>
+          <Button
+            onClick={fetchDetails}
+            variant="contained"
+            sx={{ display: "flex" }}
+          >
             Fetch User
           </Button>
-          <Box>{user ? <UserCard user={user} /> : null}</Box>
-          <Box>{user ? <Repos repos_url={user.repos_url} /> : null}</Box>
         </Grid>
       </Grid>
+
+        <Box>{user ? <UserCard user={user} /> : null}</Box>
+        <Box>{user ? <Repos repos_url={user.repos_url} /> : null}</Box>
     </>
   );
 };
